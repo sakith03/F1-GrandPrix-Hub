@@ -1,10 +1,41 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+const F1_THEME_URL = ' https://www.televisiontunes.com/uploads/audio/Formula%201%20-%20Brian%20Tyler.mp3';
+
 function Home() {
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const toggleMusic = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.volume = 0.4;
+      audioRef.current.play().catch(() => { });
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div>
-      <section className="hero">
+      {/* Audio Element */}
+      <audio ref={audioRef} loop preload="none">
+        <source src={F1_THEME_URL} type="audio/mpeg" />
+      </audio>
+
+      {/* Music Toggle Button */}
+      <button className="music-toggle" onClick={toggleMusic} title={isPlaying ? 'Pause Music' : 'Play F1 Theme'}>
+        <span className={`music-icon ${isPlaying ? 'playing' : ''}`}>
+          {isPlaying ? '🔊' : '🔇'}
+        </span>
+        <span className="music-label">{isPlaying ? 'Pause' : 'F1 Theme'}</span>
+      </button>
+
+      {/* Hero Section with Background */}
+      <section className="hero" style={{ backgroundImage: 'url(/f1-hero-bg.png)' }}>
+        <div className="hero-overlay"></div>
         <div className="hero-content">
           <div className="hero-badge">2025 Season</div>
           <h1>

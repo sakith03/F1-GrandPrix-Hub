@@ -2,6 +2,20 @@ import React, { useState, useEffect } from 'react';
 
 const API_BASE = process.env.REACT_APP_API_URL || 'https://sakith-api-app-b8gkabeabve2apec.centralindia-01.azurewebsites.net';
 
+// Team logo URLs from the official F1 media CDN
+const TEAM_LOGOS = {
+  'Red Bull Racing': 'https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/teams/2024/red-bull-racing-logo',
+  'Mercedes-AMG Petronas': 'https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/teams/2024/mercedes-logo',
+  'Scuderia Ferrari': 'https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/teams/2024/ferrari-logo',
+  'McLaren F1 Team': 'https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/teams/2024/mclaren-logo',
+  'Aston Martin': 'https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/teams/2024/aston-martin-logo',
+  'Alpine F1 Team': 'https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/teams/2024/alpine-logo',
+  'Williams Racing': 'https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/teams/2024/williams-logo',
+  'Visa Cash App RB': 'https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/teams/2024/rb-logo',
+  'Kick Sauber': 'https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/teams/2024/kick-sauber-logo',
+  'Haas F1 Team': 'https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/teams/2024/haas-logo',
+};
+
 function Teams() {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,29 +67,45 @@ function Teams() {
         {teams.map((team, index) => (
           <div
             key={team.id}
-            className="card animate-in"
+            className="card team-card animate-in"
             style={{ '--card-accent': team.color }}
           >
-            <div className="card-header">
-              <div
-                className="card-badge"
-                style={{
-                  background: `${team.color}20`,
-                  color: team.color,
-                  border: `1px solid ${team.color}40`
-                }}
-              >
-                {team.country}
-              </div>
-              {team.championships > 0 && (
-                <div className="card-badge" style={{
-                  background: 'rgba(255, 215, 0, 0.1)',
-                  color: '#FFD700',
-                  border: '1px solid rgba(255, 215, 0, 0.3)'
-                }}>
-                  🏆 {team.championships}x
+            <div className="team-card-top">
+              <div className="team-logo-wrapper">
+                <img
+                  src={TEAM_LOGOS[team.name] || ''}
+                  alt={`${team.name} logo`}
+                  className="team-logo"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+                <div className="team-logo-fallback" style={{ display: 'none' }}>
+                  <span>{team.name.charAt(0)}</span>
                 </div>
-              )}
+              </div>
+              <div className="team-badges">
+                <div
+                  className="card-badge"
+                  style={{
+                    background: `${team.color}20`,
+                    color: team.color,
+                    border: `1px solid ${team.color}40`
+                  }}
+                >
+                  {team.country}
+                </div>
+                {team.championships > 0 && (
+                  <div className="card-badge" style={{
+                    background: 'rgba(255, 215, 0, 0.1)',
+                    color: '#FFD700',
+                    border: '1px solid rgba(255, 215, 0, 0.3)'
+                  }}>
+                    🏆 {team.championships}x
+                  </div>
+                )}
+              </div>
             </div>
             <div className="card-title">{team.name}</div>
             <div className="card-subtitle">{team.base}</div>

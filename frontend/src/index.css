@@ -158,17 +158,83 @@ a {
 }
 
 /* ============================
+   Music Toggle
+   ============================ */
+.music-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(225, 6, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  color: white;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 20px rgba(225, 6, 0, 0.4);
+}
+
+.music-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 30px rgba(225, 6, 0, 0.6);
+}
+
+.music-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.music-icon.playing {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.music-label {
+  letter-spacing: 0.5px;
+}
+
+/* ============================
    Hero Section
    ============================ */
 .hero {
   position: relative;
-  min-height: 70vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   overflow: hidden;
   background: var(--gradient-dark);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 13, 13, 0.4) 0%,
+    rgba(13, 13, 13, 0.7) 50%,
+    rgba(13, 13, 13, 0.95) 100%
+  );
+  z-index: 1;
 }
 
 .hero::before {
@@ -180,6 +246,7 @@ a {
   height: 200%;
   background: radial-gradient(circle at 50% 50%, var(--f1-red-glow) 0%, transparent 50%);
   animation: heroGlow 8s ease-in-out infinite;
+  z-index: 1;
 }
 
 @keyframes heroGlow {
@@ -192,6 +259,165 @@ a {
   z-index: 2;
   max-width: 800px;
   padding: 2rem;
+}
+
+/* ============================
+   Driver Card with Photo
+   ============================ */
+.driver-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.driver-card-top {
+  display: flex;
+  align-items: stretch;
+  min-height: 140px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.driver-photo-wrapper {
+  width: 130px;
+  min-height: 140px;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+}
+
+.driver-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: var(--transition-smooth);
+}
+
+.driver-card:hover .driver-photo {
+  transform: scale(1.05);
+}
+
+.driver-photo-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--text-muted);
+  opacity: 0.5;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+}
+
+.driver-info-top {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 1rem 1.25rem;
+}
+
+.driver-info-top .card-number {
+  font-size: 2.8rem;
+  opacity: 0.25;
+}
+
+.driver-team-stripe {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  opacity: 0.8;
+}
+
+.driver-card .card-title,
+.driver-card .card-subtitle,
+.driver-card .card-details {
+  padding: 0 1.25rem;
+}
+
+.driver-card .card-title {
+  padding-top: 1rem;
+}
+
+.driver-card .card-details {
+  padding-bottom: 1.25rem;
+}
+
+/* ============================
+   Team Card with Logo
+   ============================ */
+.team-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.team-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  min-height: 100px;
+}
+
+.team-logo-wrapper {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: brightness(1.1);
+  transition: var(--transition-smooth);
+}
+
+.team-card:hover .team-logo {
+  transform: scale(1.1);
+}
+
+.team-logo-fallback {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: rgba(255,255,255,0.05);
+  color: var(--text-muted);
+}
+
+.team-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.team-card .card-title,
+.team-card .card-subtitle,
+.team-card .card-details,
+.team-card .card-header {
+  padding: 0 1.25rem;
+}
+
+.team-card .card-title {
+  padding-top: 1rem;
+}
+
+.team-card .card-details {
+  padding-bottom: 1.25rem;
 }
 
 .hero-badge {
