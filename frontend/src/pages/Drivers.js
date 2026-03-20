@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'sakith-api-app-b8gkabeabve2apec.centralindia-01.azurewebsites.net';
+const API_BASE = process.env.REACT_APP_API_URL || 'https://sakith-api-app-b8gkabeabve2apec.centralindia-01.azurewebsites.net';
 
 function Drivers() {
   const [drivers, setDrivers] = useState([]);
